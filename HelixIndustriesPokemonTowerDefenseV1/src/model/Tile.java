@@ -1,5 +1,7 @@
 package model;
 
+import java.util.ArrayList;
+
 public class Tile {
 	
 	int height;
@@ -10,10 +12,12 @@ public class Tile {
 	private boolean hasMob;
 	private boolean isWater;
 	private boolean isLand;
-	private int direction;
+	private Directions direction = null;
+	private ArrayList mobList = new ArrayList<Mob>();
 	private int row;
 	private int col;
-	Object myObject = null;
+	private Object myObject = null;
+	private Tile next;
 	
 	public Tile(int width, int height) {
 		this.width = width;
@@ -30,7 +34,7 @@ public class Tile {
 	}
 	
 	public Object getObject() {
-		return this.myObject;
+		return myObject;
 	}
 	
 	public boolean isOnPath() {
@@ -93,12 +97,27 @@ public class Tile {
 	// 1 := right
 	// 2 := down
 	// 3 := left
-	public void setDirection(int direction) {
+	public void setDirection(Directions direction) {
 		this.direction = direction;
 	}
-	
-	public int getDirection(int direction) {
+
+	public Directions getDirection() {
 		return direction;
 	}
+	
+	public void setMobList() {
+		
+	}
+	
+	public void setNextTile(Tile next) {
+		this.next = next;
+	}
+	
+	public Tile getNextTile() {
+		return next;
+	}
+	
+	// Set next tile
+	// Set MobList by adding and removing from this tile to next
 
 }

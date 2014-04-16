@@ -1,12 +1,17 @@
 package model;
 
+import java.awt.image.BufferedImage;
+import java.util.LinkedList;
+
 import towers.*;
 
-public class Map 
+public abstract class Map 
 {
-	int width = 800;
-	int height = 720;
+	int width;
+	int height;
 	Tile [][] grid = new Tile[height][width];
+	private BufferedImage image;
+	private LinkedList<Tile> path = new LinkedList<Tile>();
 	
 	public Map(int width, int height, Tile [][] grid) {
 		this.width = width;
@@ -43,8 +48,11 @@ public class Map
 		grid[row][col].setObject(mob);
 	}
 	
-	// Sets a tile equal to the path
+	// Sets a tile equal to the path, adds to path list, and sets Tile as prev Tile's next
 	public void setPath(int row, int col) {
+		path.add(grid[row][col]);
+		if (path.size() > 1)
+			path.get(path.size() - 1).setNextTile(grid[row][col]);
 		grid[row][col].setOnPath(true);
 	}
 	
@@ -53,7 +61,7 @@ public class Map
 	// 1 := right
 	// 2 := down
 	// 3 := left
-	public void setDirection(int row, int col, int direction) {
+	public void setDirection(int row, int col, Directions direction) {
 		grid[row][col].setDirection(direction);
 	}
 	
@@ -83,7 +91,7 @@ public class Map
 	
 	// Returns tower on a tile in the grid
 	public Object getObject(int row, int col) {
-		return grid[row][col].myObject;
+		return grid[row][col].getObject();
 	}
 	
 	// Set methods for enemies, path, background, frame, more
